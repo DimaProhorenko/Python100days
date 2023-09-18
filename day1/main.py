@@ -4,5 +4,5 @@
 # print('e.g. print("Hello " + "world")')
 # print("New lines can be created with a backslash and n.")
 
-name = input("Enter your name: ")
-print("Hello " + name)
+# name = input("Enter your name: ")
+# print("Hello " + name)
