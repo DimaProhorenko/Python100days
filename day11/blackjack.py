@@ -13,8 +13,10 @@ def reset_hand(hand):
 
 
 def reset():
-    reset_hand(player_hand)
-    reset_hand(comp_hand)
+    global player_hand
+    global comp_hand
+    player_hand = []
+    comp_hand = []
 
 
 def first_round(deck):
@@ -104,12 +106,13 @@ def get_winner():
 def play():
     reset()
     helpers.clear_console()
+    print(logo.logo)
     deck = my_deck.shuffle_deck(my_deck.get_deck())
     first_round(deck)
     draw_card(player_hand, deck)
     display_comp_hand(True)
     comp_choice(deck)
-    print(get_winner())
+    get_winner()
 
 
 while True:
