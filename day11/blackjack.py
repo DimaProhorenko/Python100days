@@ -1,6 +1,7 @@
 import logo
 import deck as my_deck
 import helpers
+import bot
 
 player_hand = []
 comp_hand = []
@@ -24,19 +25,24 @@ def first_round(deck):
 
 
 def draw_card(hand, deck):
-    while True:
-        is_deal = input("Type 'y' to get another card, type 'n' to pass:")
-        if is_deal == "y":
+    is_deal = True
+    while is_deal:
+        print(is_deal)
+        choice = input("Type 'y' to get another card, type 'n' to pass:")
+        if choice == "y":
             card = my_deck.deal_card(deck)
             hand.append(card)
             display_hand(hand)
             if check_loose(hand):
-                break
-        elif is_deal == "n":
-            print(f"Your final hand is {hand}, total - {count_total(hand)}")
-            break
+                print("SHOULD STOP")
+                is_deal = False
+        elif choice == "n":
+            print(
+                f"Your final hand is {hand}, total - {count_total(hand)} FUCK")
+            is_deal = False
         else:
             print("Unknown choice. Probably a typo")
+    print("END DRAWING")
 
 
 def count_total(hand):
@@ -62,10 +68,12 @@ def display_comp_hand(show_all):
 
 
 def comp_choice(deck):
-    total = count_total(comp_hand)
-    while total < 18:
-        draw_card(comp_hand, deck)
+    while True:
+        total = count_total(comp_hand)
+        bot.get_card(deck, comp_hand)
         display_comp_hand(True)
+        if total >= 19:
+            break
 
 
 def check_loose(hand):
@@ -76,8 +84,8 @@ def check_loose(hand):
 
 
 def get_winner():
-    player_count = count_total(player_count)
-    comp_count = count_total(comp_count)
+    player_count = count_total(player_hand)
+    comp_count = count_total(comp_hand)
 
     if (player_count > 21 and comp_count <= 21) or (player_count < comp_count):
         return "You lost"
