@@ -1,3 +1,5 @@
+from printer import Printer
+
 
 class MenuItem:
     def __init__(self, name: str, price: float, water: int, milk: int, coffee: int):
@@ -43,10 +45,22 @@ class Menu:
         return self.__items
 
     def display_items(self):
+        Printer.set_fields(["Coffee", "Cost"])
         for item in self.items:
-            print(f"{item.name}: ${item.price}")
+            # print(f"{item.name}: ${item.price}")
+            Printer.add_row([item.name.capitalize(), f"${item.price}"])
+        Printer.print_table()
+        Printer.clear_table()
 
     def check_item_exists(self, name):
+        counter = 0
+        for item in self.items:
+            if item.compare_name(name):
+                return counter
+            counter += 1
+        return -1
+
+    def get_item_index(self, name):
         for item in self.items:
             if item.compare_name(name):
                 return True
