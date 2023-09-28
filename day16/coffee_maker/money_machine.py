@@ -25,7 +25,7 @@ class MoneyMachine:
         if cost == total:
             return True
         elif cost < total:
-            print(f"Here's your change: ${total - cost}")
+            print(f"Here's your change: ${round(total - cost, 2)}")
             return True
         print(f"Not enough money. You have been refunded ${total}")
         return False

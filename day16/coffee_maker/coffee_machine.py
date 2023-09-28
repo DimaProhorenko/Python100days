@@ -20,6 +20,8 @@ class CoffeeMachine:
             "report": self.report,
             "exit": self.exit,
             "revenue": self.show_revenue,
+            "take revenue": self.take_revenue,
+            "fill": self.fill
         }
         self.__mm = MoneyMachine()
         self.__is_running = True
@@ -100,6 +102,16 @@ class CoffeeMachine:
         self.is_running = False
         os.system("cls")
         print("GOOD BYE")
+
+    def fill(self):
+        for item in self.ingredients:
+            item_amount = float(input(f"Enter amount of {item}: "))
+            if item_amount > 0:
+                self.ingredients[item] += item_amount
+
+    def take_revenue(self):
+        print(f"Here's ${self.total}")
+        self.total = 0
 
     def show_revenue(self):
         print(f"Total is: ${self.total}")
