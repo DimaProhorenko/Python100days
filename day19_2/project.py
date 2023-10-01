@@ -10,7 +10,7 @@ s = Screen()
 
 
 s.setup(screen_width, screen_height)
-user_bet = s.textinput(title="Make your bet", prompt="Which turtle do you think is gonna win?")
+user_bet = s.textinput(title="Make your bet", prompt="Which turtle do you think is gonna win?").lower()
 
 
 def create_turtles():
@@ -19,6 +19,7 @@ def create_turtles():
         turtle = Turtle(shape="turtle")
         turtle.color(color)
         turtles.append(turtle)
+        random.shuffle(turtles)
     return turtles
 
 
@@ -38,28 +39,28 @@ def reset_all_turtles(turtles):
 def move_turtles(turtles):
     for turtle in turtles:
         turtle.forward(random.randint(10, 30))
-
-
-def check_win(turtles):
-    for turtle in turtles:
-        if round(turtle.xcor(), 2) >= screen_width / 2 - 40:
-            turtle.setx(screen_width / 2 - 40)
+        if check_win(turtle):
             return turtle
     return None
+
+
+def check_win(current_turtle):
+    return current_turtle.xcor() >= screen_width / 2 - 40
+
+
+def check_user_win(win_turtle):
+    return user_bet == win_turtle.color()[0]
 
 
 def start():
     turtles_list = create_turtles()
     reset_all_turtles(turtles_list)
     while True:
-        move_turtles(turtles_list)
-        winner = check_win(turtles_list)
-        if winner is not None:
-            print(winner.color())
+        winner = move_turtles(turtles_list)
+        if isinstance(winner, Turtle):
+            print("You won" if check_user_win(winner) else "You lost")
             break
 
 
 start()
-
-
 s.exitonclick()
